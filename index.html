@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RainLab - Browser Derain Playground</title>
+    <meta
+      name="description"
+      content="RainLab is a zero-dependency browser playground for rain synthesis, lightweight deraining previews, and before/after image export."
+    >
+    <meta name="author" content="Minghao Liu">
+    <meta property="og:title" content="RainLab - Browser Derain Playground">
+    <meta
+      property="og:description"
+      content="Upload an image, synthesize controllable rain, preview lightweight deraining, and export a comparison card."
+    >
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#workspace" aria-label="RainLab home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>RainLab</span>
+      </a>
+      <nav class="topnav" aria-label="Project links">
+        <a href="#workspace">Playground</a>
+        <a href="#recipes">Recipes</a>
+        <a href="https://github.com/StaryMoon" target="_blank" rel="noreferrer">StaryMoon</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="workspace" id="workspace">
+        <aside class="panel controls" aria-label="RainLab controls">
+          <div class="panel-heading">
+            <p class="eyebrow">Zero-dependency image lab</p>
+            <h1>Make it rain. Then make it clear.</h1>
+            <p>
+              A tiny browser lab for controllable rain synthesis, quick derain
+              previews, and shareable before/after cards.
+            </p>
+          </div>
+
+          <div class="upload-zone" id="dropZone">
+            <input id="fileInput" type="file" accept="image/*">
+            <label for="fileInput">
+              <strong>Drop or choose an image</strong>
+              <span>PNG, JPG, WebP. Everything runs locally.</span>
+            </label>
+          </div>
+
+          <div class="control-stack">
+            <label>
+              <span>Rain amount <output id="rainAmountValue">58</output></span>
+              <input id="rainAmount" type="range" min="0" max="100" value="58">
+            </label>
+            <label>
+              <span>Streak length <output id="streakLengthValue">42</output></span>
+              <input id="streakLength" type="range" min="8" max="96" value="42">
+            </label>
+            <label>
+              <span>Wind angle <output id="windAngleValue">-18</output></span>
+              <input id="windAngle" type="range" min="-55" max="55" value="-18">
+            </label>
+            <label>
+              <span>Atmospheric haze <output id="hazeValue">22</output></span>
+              <input id="haze" type="range" min="0" max="70" value="22">
+            </label>
+            <label>
+              <span>Derain strength <output id="derainValue">64</output></span>
+              <input id="derain" type="range" min="0" max="100" value="64">
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button id="randomizeBtn" type="button">Randomize rain</button>
+            <button id="sampleBtn" type="button">Reset sample</button>
+          </div>
+        </aside>
+
+        <section class="canvas-panel" aria-label="RainLab preview">
+          <div class="canvas-toolbar">
+            <div>
+              <p class="eyebrow">Interactive preview</p>
+              <h2 id="imageTitle">PKU Lake Sample</h2>
+            </div>
+            <div class="view-toggle" role="group" aria-label="Preview mode">
+              <button class="active" type="button" data-view="split">Split</button>
+              <button type="button" data-view="rainy">Rainy</button>
+              <button type="button" data-view="cleaned">Cleaned</button>
+            </div>
+          </div>
+
+          <div class="stage" id="stage">
+            <canvas id="previewCanvas" width="1200" height="760"></canvas>
+            <div class="split-handle" id="splitHandle" aria-hidden="true">
+              <span></span>
+            </div>
+          </div>
+
+          <div class="caption-row">
+            <span>Rainy synthesis</span>
+            <span>Lightweight derain preview</span>
+          </div>
+        </section>
+
+        <aside class="panel readout" aria-label="RainLab readout">
+          <div class="score-card">
+            <p class="eyebrow">Synthetic score</p>
+            <strong id="clarityScore">82</strong>
+            <span>clarity estimate</span>
+          </div>
+
+          <div class="mini-grid">
+            <div>
+              <span>Rain pixels</span>
+              <strong id="rainPixels">18k</strong>
+            </div>
+            <div>
+              <span>Contrast</span>
+              <strong id="contrastScore">+12%</strong>
+            </div>
+            <div>
+              <span>Seed</span>
+              <strong id="seedValue">PKU-58</strong>
+            </div>
+            <div>
+              <span>Runtime</span>
+              <strong id="runtimeValue">0 ms</strong>
+            </div>
+          </div>
+
+          <div class="action-stack">
+            <button id="downloadBtn" type="button">Export comparison PNG</button>
+            <button id="copyRecipeBtn" type="button">Copy recipe</button>
+          </div>
+
+          <div class="recipe-box" id="recipeBox">
+            <strong>Recipe</strong>
+            <p id="recipeText">Rain 58, streak 42, angle -18, haze 22, derain 64.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="recipes" id="recipes">
+        <div class="section-heading">
+          <p class="eyebrow">Why this exists</p>
+          <h2>A tiny public demo for weather-robust vision people.</h2>
+          <p>
+            RainLab is not a neural deraining model. It is a fast visual sandbox:
+            useful for teaching, paper demos, README screenshots, and explaining
+            what rain corruption does before a heavy model enters the room.
+          </p>
+        </div>
+
+        <div class="recipe-grid">
+          <article>
+            <span>01</span>
+            <h3>Dataset intuition</h3>
+            <p>Show how density, streak direction, and haze change image statistics.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Talk-ready cards</h3>
+            <p>Export a polished before/after card for slides, posts, or issue reports.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>No server required</h3>
+            <p>Everything runs in the browser, so private images never leave the device.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>RainLab by Minghao Liu</span>
+      <a href="https://starymoon.github.io/" target="_blank" rel="noreferrer">starymoon.github.io</a>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

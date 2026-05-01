@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="RainLab">
+  <rect width="64" height="64" rx="14" fill="#101317"/>
+  <path d="M16 18h22c8 0 14 6 14 14s-6 14-14 14H16z" fill="#f8fbff"/>
+  <path d="M20 24h17c4 0 7 3 7 7s-3 7-7 7H20z" fill="#00a6b8"/>
+  <path d="M20 45l7-12M34 48l8-15" stroke="#7be0d4" stroke-width="4" stroke-linecap="round"/>
+</svg>
