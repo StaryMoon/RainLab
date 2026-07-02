@@ -3,6 +3,12 @@
 RainLab is a zero-dependency browser playground for rain synthesis, lightweight
 deraining previews, and shareable before/after cards.
 
+<p align="center">
+  <img src="assets/preview.png" alt="RainLab public demo screenshot" width="900">
+</p>
+
+<sub>Image source: public GitHub Pages demo screenshot, [https://starymoon.github.io/RainLab/](https://starymoon.github.io/RainLab/). Captured on 2026-07-02.</sub>
+
 It is designed for computer vision researchers, students, and builders who want
 to explain weather degradation quickly without installing Python environments,
 downloading model weights, or uploading private images to a server.
